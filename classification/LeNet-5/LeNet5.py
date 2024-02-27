@@ -3,42 +3,42 @@ import torch.nn as nn
 class LeNet5(nn.Module):
     def __init__(self):
         super(LeNet5, self).__init__()
-        # °üº¬Ò»¸ö¾í»ý²ãºÍ³Ø»¯²ã£¬·Ö±ð¶ÔÓ¦LeNet5ÖÐµÄC1ºÍS2£¬
-        # ¾í»ý²ãµÄÊäÈëÍ¨µÀÎª1£¬Êä³öÍ¨µÀÎª6£¬ÉèÖÃ¾í»ýºË´óÐ¡5x5£¬²½³¤Îª1
-        # ³Ø»¯²ãµÄkernel´óÐ¡Îª2x2
+        # åŒ…å«ä¸€ä¸ªå·ç§¯å±‚å’Œæ± åŒ–å±‚ï¼Œåˆ†åˆ«å¯¹åº”LeNet5ä¸­çš„C1å’ŒS2ï¼Œ
+        # å·ç§¯å±‚çš„è¾“å…¥é€šé“ä¸º1ï¼Œè¾“å‡ºé€šé“ä¸º6ï¼Œè®¾ç½®å·ç§¯æ ¸å¤§å°5x5ï¼Œæ­¥é•¿ä¸º1
+        # æ± åŒ–å±‚çš„kernelå¤§å°ä¸º2x2
         self._conv1 = nn.Sequential(
             nn.Conv2d(in_channels=1, out_channels=6, kernel_size=5, stride=1),
             nn.MaxPool2d(kernel_size=2)
         )
-        # °üº¬Ò»¸ö¾í»ý²ãºÍ³Ø»¯²ã£¬·Ö±ð¶ÔÓ¦LeNet5ÖÐµÄC3ºÍS4£¬
-        # ¾í»ý²ãµÄÊäÈëÍ¨µÀÎª6£¬Êä³öÍ¨µÀÎª16£¬ÉèÖÃ¾í»ýºË´óÐ¡5x5£¬²½³¤Îª1
-        # ³Ø»¯²ãµÄkernel´óÐ¡Îª2x2
+        # åŒ…å«ä¸€ä¸ªå·ç§¯å±‚å’Œæ± åŒ–å±‚ï¼Œåˆ†åˆ«å¯¹åº”LeNet5ä¸­çš„C3å’ŒS4ï¼Œ
+        # å·ç§¯å±‚çš„è¾“å…¥é€šé“ä¸º6ï¼Œè¾“å‡ºé€šé“ä¸º16ï¼Œè®¾ç½®å·ç§¯æ ¸å¤§å°5x5ï¼Œæ­¥é•¿ä¸º1
+        # æ± åŒ–å±‚çš„kernelå¤§å°ä¸º2x2
         self._conv2 = nn.Sequential(
             nn.Conv2d(in_channels=6, out_channels=16, kernel_size=5, stride=1),
             nn.MaxPool2d(kernel_size=2)
         )
-        # ¶ÔÓ¦LeNet5ÖÐC5¾í»ý²ã£¬ÓÉÓÚËü¸úÈ«Á¬½Ó²ãÀàËÆ£¬ËùÒÔÕâÀïÊ¹ÓÃÁËnn.LinearÄ£¿é
-        # ¾í»ý²ãµÄÊäÈëÍ¨ÌØÕ÷Îª4x4x16£¬Êä³öÌØÕ÷Îª120x1
+        # å¯¹åº”LeNet5ä¸­C5å·ç§¯å±‚ï¼Œç”±äºŽå®ƒè·Ÿå…¨è¿žæŽ¥å±‚ç±»ä¼¼ï¼Œæ‰€ä»¥è¿™é‡Œä½¿ç”¨äº†nn.Linearæ¨¡å—
+        # å·ç§¯å±‚çš„è¾“å…¥é€šç‰¹å¾ä¸º4x4x16ï¼Œè¾“å‡ºç‰¹å¾ä¸º120x1
         self._fc1 = nn.Sequential(
             nn.Linear(in_features=4*4*16, out_features=120)
         )
-        # ¶ÔÓ¦LeNet5ÖÐµÄF6£¬ÊäÈëÊÇ120Î¬ÏòÁ¿£¬Êä³öÊÇ84Î¬ÏòÁ¿
+        # å¯¹åº”LeNet5ä¸­çš„F6ï¼Œè¾“å…¥æ˜¯120ç»´å‘é‡ï¼Œè¾“å‡ºæ˜¯84ç»´å‘é‡
         self._fc2 = nn.Sequential(
             nn.Linear(in_features=120, out_features=84)
         )
-        # ¶ÔÓ¦LeNet5ÖÐµÄÊä³ö²ã£¬ÊäÈëÊÇ84Î¬ÏòÁ¿£¬Êä³öÊÇ10Î¬ÏòÁ¿
+        # å¯¹åº”LeNet5ä¸­çš„è¾“å‡ºå±‚ï¼Œè¾“å…¥æ˜¯84ç»´å‘é‡ï¼Œè¾“å‡ºæ˜¯10ç»´å‘é‡
         self._fc3 = nn.Sequential(
             nn.Linear(in_features=84, out_features=10)
         )
 
     def forward(self, input):
-        # Ç°Ïò´«²¥
+        # å‰å‘ä¼ æ’­
         # MNIST DataSet image's format is 28x28x1
         # [28,28,1]--->[24,24,6]--->[12,12,6]
         conv1_output = self._conv1(input)
         # [12,12,6]--->[8,8,,16]--->[4,4,16]
         conv2_output = self._conv2(conv1_output)
-        # ½«[n,4,4,16]Î¬¶È×ª»¯Îª[n,4*4*16]
+        # å°†[n,4,4,16]ç»´åº¦è½¬åŒ–ä¸º[n,4*4*16]
         conv2_output = conv2_output.view(-1, 4 * 4 * 16)
         # [n,256]--->[n,120]
         fc1_output = self._fc1(conv2_output)

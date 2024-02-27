@@ -11,25 +11,25 @@ train_data = pd.DataFrame(pd.read_csv("../Data/mnist_train.csv"))
 model = LeNet5()
 print(model)
 
-# ¶¨Òå½»²æìØËğÊ§º¯Êı
+# å®šä¹‰äº¤å‰ç†µæŸå¤±å‡½æ•°
 loss_fc = nn.CrossEntropyLoss()
-# ÓÃmodelµÄ²ÎÊı³õÊ¼»¯Ò»¸öËæ»úÌİ¶ÈÏÂ½µÓÅ»¯Æ÷
+# ç”¨modelçš„å‚æ•°åˆå§‹åŒ–ä¸€ä¸ªéšæœºæ¢¯åº¦ä¸‹é™ä¼˜åŒ–å™¨
 optimizer = optim.SGD(params=model.parameters(),lr=0.001, momentum=0.78)
 loss_list = []
 x = []
 
-# µü´ú´ÎÊı1000´Î
+# è¿­ä»£æ¬¡æ•°1000æ¬¡
 for i in range(1000):
-    # Ğ¡ÅúÁ¿Êı¾İ¼¯´óĞ¡ÉèÖÃÎª30
+    # å°æ‰¹é‡æ•°æ®é›†å¤§å°è®¾ç½®ä¸º30
     batch_data = train_data.sample(n=30, replace=False)
-    # Ã¿Ò»ÌõÊı¾İµÄµÚÒ»¸öÖµÊÇ±êÇ©Êı¾İ
+    # æ¯ä¸€æ¡æ•°æ®çš„ç¬¬ä¸€ä¸ªå€¼æ˜¯æ ‡ç­¾æ•°æ®
     batch_y = torch.from_numpy(batch_data.iloc[:,0].values).long()
-    #Í¼Æ¬ĞÅÏ¢£¬Ò»ÌõÊı¾İ784Î¬½«Æä×ª»¯ÎªÍ¨µÀÊıÎª1£¬´óĞ¡28*28µÄÍ¼Æ¬¡£
+    #å›¾ç‰‡ä¿¡æ¯ï¼Œä¸€æ¡æ•°æ®784ç»´å°†å…¶è½¬åŒ–ä¸ºé€šé“æ•°ä¸º1ï¼Œå¤§å°28*28çš„å›¾ç‰‡ã€‚
     batch_x = torch.from_numpy(batch_data.iloc[:,1::].values).float().view(-1,1,28,28)
 
-    # Ç°Ïò´«²¥¼ÆËãÊä³ö½á¹û
+    # å‰å‘ä¼ æ’­è®¡ç®—è¾“å‡ºç»“æœ
     prediction = model.forward(batch_x)
-    # ¼ÆËãËğÊ§Öµ
+    # è®¡ç®—æŸå¤±å€¼
     loss = loss_fc(prediction, batch_y)
     # Clears the gradients of all optimized
     optimizer.zero_grad()
@@ -37,7 +37,7 @@ for i in range(1000):
     loss.backward()
     # Performs a single optimization step (parameter update).
     optimizer.step()
-    print("µÚ%d´ÎÑµÁ·£¬lossÎª%.3f" % (i, loss.item()))
+    print("ç¬¬%dæ¬¡è®­ç»ƒï¼Œlossä¸º%.3f" % (i, loss.item()))
     loss_list.append(loss)
     x.append(i)
 

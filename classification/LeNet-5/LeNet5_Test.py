@@ -13,15 +13,15 @@ accuracy_list = []
 testList = []
 
 with torch.no_grad():
-    # ½øĞĞÒ»°Ù´Î²âÊÔ
+    # è¿›è¡Œä¸€ç™¾æ¬¡æµ‹è¯•
     for i in range(100):
-        # Ã¿´Î´Ó²âÊÔ¼¯ÖĞËæ»úÌôÑ¡50¸öÑù±¾
+        # æ¯æ¬¡ä»æµ‹è¯•é›†ä¸­éšæœºæŒ‘é€‰50ä¸ªæ ·æœ¬
         batch_data = test_data.sample(n=50,replace=False)
         batch_x = torch.from_numpy(batch_data.iloc[:,1::].values).float().view(-1,1,28,28)
         batch_y = batch_data.iloc[:,0].values
         prediction = np.argmax(model(batch_x).numpy(), axis=1)
         acccurcy = np.mean(prediction==batch_y)
-        print("µÚ%d×é²âÊÔ¼¯£¬×¼È·ÂÊÎª%.3f" % (i,acccurcy))
+        print("ç¬¬%dç»„æµ‹è¯•é›†ï¼Œå‡†ç¡®ç‡ä¸º%.3f" % (i,acccurcy))
         accuracy_list.append(acccurcy)
         testList.append(i)
 
