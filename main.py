@@ -4,6 +4,18 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 
+class FatFather(object):
+    def __init__(self, name):
+        print('FatFather的init开始被调用')
+        self.name = name
+        print('FatFather的name是%s' % self.name)
+        print('FatFather的init调用结束')
+
+
+def main():
+    ff = FatFather("胖子老板的父亲")
+
+
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
     print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
