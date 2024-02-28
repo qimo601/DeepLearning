@@ -1,28 +1,47 @@
 # This is a sample Python script.
-
-# 胖子老板的父类
-# 胖子老板的父类
-class FatFather(object):
-    def __init__(self, name):
-        print('FatFather的init开始被调用')
-        self.name = name
-        print('调用FatFather类的name是%s' % self.name)
-        print('FatFather的init调用结束')
-
-
-# 胖子老板类 继承 FatFather 类
-class FatBoss(FatFather):
-    def __init__(self, name, hobby):
-        print('胖子老板的类被调用啦！')
-        self.hobby = hobby
-        #FatFather.__init__(self,name)   # 直接调用父类的构造方法
-        super().__init__(name)
-        print("%s 的爱好是 %s" % (name, self.hobby))
-
+import torch
+import torchvision
+import torchvision.transforms as transforms
+import matplotlib.pyplot as plt
+import numpy as np
 
 def main():
-    #ff = FatFather("胖子老板的父亲")
-    fatboss = FatBoss("胖子老板", "打斗地主")
+    transform = transforms.Compose(
+        [transforms.ToTensor(),
+         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+
+    batch_size = 4
+
+    trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
+                                            download=False, transform=transform)
+    trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
+                                              shuffle=True, num_workers=2)
+
+    testset = torchvision.datasets.CIFAR10(root='./data', train=False,
+                                           download=False, transform=transform)
+    testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
+                                             shuffle=False, num_workers=2)
+
+    classes = ('plane', 'car', 'bird', 'cat',
+               'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+
+
+    # get some random training images
+    dataiter = iter(trainloader)
+    images, labels = next(dataiter)
+
+    # show images
+    imshow(torchvision.utils.make_grid(images))
+    # print labels
+    print(' '.join(f'{classes[labels[j]]:5s}' for j in range(batch_size)))
+
+# functions to show an image
+
+def imshow(img):
+    img = img / 2 + 0.5     # unnormalize
+    npimg = img.numpy()
+    plt.imshow(np.transpose(npimg, (1, 2, 0)))
+    plt.show()
 
 
 
@@ -36,4 +55,4 @@ def print_hi(name):
 if __name__ == '__main__':
     main()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
