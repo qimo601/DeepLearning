@@ -92,28 +92,7 @@ def main():
     plt.scatter(np.array(all_x), np.array(all_y), color='red')
     plt.show()
 
-def drawGif():
-    #plt.style.use('seaborn-pastel')
-
-    fig = plt.figure()
-    ax = plt.axes(xlim=(0, 4), ylim=(-2, 2))
-    line, = ax.plot([], [], lw=3)
-
-    def init():
-        line.set_data([], [])
-        return line,
-
-    def animate(i):
-        x = np.linspace(0, 4, 1000)
-        y = np.sin(2 * np.pi * (x - 0.01 * i))
-        line.set_data(x, y)
-        return line,
-
-    anim = FuncAnimation(fig, animate, init_func=init,
-                         frames=100, interval=20, blit=True)
-
-    anim.save('sine_wave.gif', writer='pillow')
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    drawGif()
+    main()
