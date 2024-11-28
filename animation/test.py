@@ -7,10 +7,14 @@
 @Date: 2024/10/30
 @Description: 
 """
-from matplotlib import pyplot as plt
 import numpy as np
 
-xpoints=np.array([0,10])
-ypoints=np.array([0,100])
-plt.plot(xpoints,ypoints)
-plt.show()
+# 生成一些示例数据
+x = np.array([0, 1, 2, 3, 4])
+y = np.array([1.1, 2.0, 2.9, 4.2, 5.1])
+
+# 进行一次多项式拟合
+coefficients = np.polyfit(x, y, 1)
+
+# 打印拟合的系数
+print(coefficients)
