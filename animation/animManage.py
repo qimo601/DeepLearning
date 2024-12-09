@@ -24,7 +24,8 @@ z2 = g * t ** 2 / 2 + v02 * t
 scat = ax.scatter(t[0], z[0], c="b", s=5, label=f'v0 = {v0} m/s')
 line2 = ax.plot(t[0], z2[0], label=f'v0 = {v02} m/s')[0]
 ax.set(xlim=[0, 3], ylim=[-4, 10], xlabel='Time [s]', ylabel='Z [m]')
-ax.legend()
+# 图例 loc参数可以为1,2,3,4。分别代表第一二三四象限。
+ax.legend(loc=1)
 
 
 def update(frame):
@@ -37,7 +38,7 @@ def update(frame):
     # update the line plot:
     line2.set_xdata(t[:frame])
     line2.set_ydata(z2[:frame])
-    return (scat, line2)
+    #return (scat, line2)
 
 
 anim = animation.FuncAnimation(fig=fig, func=update, frames=40, interval=30)
